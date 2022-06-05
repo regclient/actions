@@ -1,0 +1,70 @@
+name: regctl-installer
+author: regclient
+description: 'Docker registry client'
+branding:
+  icon: 'layers'
+  color: 'blue'
+inputs:
+  release:
+    description: 'version to install'
+    required: false
+    default: 'latest'
+  install-dir:
+    description: 'where to install the binary'
+    required: false
+    default: '$HOME/.regctl/bin'
+runs:
+  using: 'composite'
+  steps:
+    - shell: bash
+      run: |
+        #!/bin/bash
+        set -e
+        shopt -s expand_aliases
+        if [ -z "$NO_COLOR" ]; then
+          alias log_info="echo -e \"\033[1;32mINFO\033[0m:\""
+          alias log_error="echo -e \"\033[1;31mERROR\033[0m:\""
+        else
+          alias log_info="echo \"INFO:\""
+          alias log_error="echo \"ERROR:\""
+        fi
+        mkdir -p "${{ inputs.install-dir }}"
+        url_base="https://github.com/regclient/regclient/releases"
+        if [ "${{ inputs.release }}" = "latest" ]; then
+          url_release="latest/download"
+        else
+          url_release="download/${{ inputs.release }}"
+        fi
+        url_ext=""
+        case "${{ runner.os }}-${{ runner.arch }}" in
+          Linux-X64)
+            url_platform="linux-amd64"
+            ;;
+          Linux-ARM64)
+            url_platform="linux-arm64"
+            ;;
+          macOS-X64)
+            url_platform="darwin-amd64"
+            ;;
+          macOS-ARM64)
+            url_platform="darwin-arm64"
+            ;;
+          Windows-X64)
+            url_platform="windows-amd64"
+            url_ext=".exe"
+            ;;
+          *)
+            log_error "architecture not supported: ${{ runner.os }}-${{ runner.arch }}"
+            exit 1
+            ;;
+        esac
+        curl -sL "${url_base}/${url_release}/regctl-${url_platform}${url_ext}" -o "${{ inputs.install-dir }}/regctl${url_ext}"
+        chmod +x "${{ inputs.install-dir }}/regctl${url_ext}"
+        log_info "install complete"
+    - if: ${{ runner.os == 'Linux' || runner.os == 'macOS' }}
+      shell: bash
+      run:  echo "${{ inputs.install-dir }}" >> $GITHUB_PATH
+    - if: ${{ runner.os == 'Windows' }}
+      shell: pwsh
+      run:  echo "${{ inputs.install-dir }}" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+
