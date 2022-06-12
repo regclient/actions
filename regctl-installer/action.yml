@@ -29,11 +29,17 @@ runs:
           alias log_error="echo \"ERROR:\""
         fi
         mkdir -p "${{ inputs.install-dir }}"
-        url_base="https://github.com/regclient/regclient/releases"
-        if [ "${{ inputs.release }}" = "latest" ]; then
-          url_release="latest/download"
+        url_base="https://github.com/regclient/regclient"
+        if [ "${{ inputs.release }}" = "main" ]; then
+          log_info "Installing using go install from main..."
+          go install github.com/regclient/regclient/cmd/regctl@main
+          GOPATH=$(go env GOPATH)
+          ln -s "$GOPATH/bin/regctl" "${{ inputs.install-dir }}/regctl${url_ext}"
+          exit 0
+        elif [ "${{ inputs.release }}" = "latest" ]; then
+          url_release="releases/latest/download"
         else
-          url_release="download/${{ inputs.release }}"
+          url_release="releases/download/${{ inputs.release }}"
         fi
         url_ext=""
         case "${{ runner.os }}-${{ runner.arch }}" in
