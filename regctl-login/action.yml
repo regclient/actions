@@ -1,0 +1,25 @@
+name: regctl-login
+author: regclient
+description: 'regctl Registry Login'
+branding:
+  icon: 'layers'
+  color: 'blue'
+inputs:
+  registry:
+    description: registry server to login
+    required: false
+    default: ghcr.io
+  username:
+    description: username for authentication
+    required: false
+    default: ${{ github.actor }}
+  password:
+    description: password to login with
+    required: false
+    default: ${{ github.token }}
+runs:
+  using: 'composite'
+  steps:
+    - shell: bash
+      run: |
+        echo "${{ inputs.password }}" | regctl registry login "${{ inputs.registry }}" -u "${{ inputs.user }}" --pass-stdin
