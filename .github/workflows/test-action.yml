@@ -8,18 +8,21 @@ jobs:
     name: Test regctl install
     strategy:
       matrix:
-        version: ["latest", "main", "v0.4.3"]
+        version: ["latest", "main", "v0.4.7"]
         os: [macos-latest, ubuntu-latest, windows-latest]
     runs-on: ${{ matrix.os }}
     steps:
       - name: Check out code
         uses: actions/checkout@v3
 
-      - name: Set up Go 1.17
+      - name: Set up Go
         if: ${{ matrix.version == 'main' }}
         uses: actions/setup-go@v3
         with:
-          go-version: 1.17.x
+          go-version: 1.19.x
+
+      - name: Install cosign
+        uses: sigstore/cosign-installer@main
 
       - name: Install regctl
         uses: ./regctl-installer/
@@ -28,6 +31,9 @@ jobs:
 
       - name: Verify install
         run: regctl version
+
+      - name: Login
+        uses: ./regctl-login/
 
       - name: Check root directory
         shell: bash
