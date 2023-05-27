@@ -30,20 +30,20 @@ runs:
         fi
         mkdir -p "${{ inputs.install-dir }}"
         url_base="https://github.com/regclient/regclient"
+        url_ext=""
+        if [ "${{ runner.os }}" = "Windows" ]; then
+          url_ext=".exe"
+        fi
         if [ "${{ inputs.release }}" = "main" ]; then
           log_info "Installing using go install from main..."
           go install github.com/regclient/regclient/cmd/regctl@main
           GOPATH=$(go env GOPATH)
-          ln -s "$GOPATH/bin/regctl" "${{ inputs.install-dir }}/regctl${url_ext}"
+          ln -s "$GOPATH/bin/regctl${url_ext}" "${{ inputs.install-dir }}/regctl${url_ext}"
           exit 0
         elif [ "${{ inputs.release }}" = "latest" ]; then
           url_release="releases/latest/download"
         else
           url_release="releases/download/${{ inputs.release }}"
-        fi
-        url_ext=""
-        if [ "${{ runner.os }}" = "Windows" ]; then
-          url_ext=".exe"
         fi
         case "${{ runner.os }}-${{ runner.arch }}" in
           Linux-X64)   url_platform="linux-amd64" ;;
