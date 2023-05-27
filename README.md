@@ -12,7 +12,7 @@ This action installs the `regctl` binary.
 - name: Install regctl
   uses: regclient/actions/regctl-installer@main
   with:
-    release: 'v0.4.0' # optional version
+    release: 'v0.4.7' # optional version
 ```
 
 ### regctl-installer Inputs
