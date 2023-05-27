@@ -66,7 +66,7 @@ jobs:
         uses: regclient/actions/regctl-login@main
 ```
 
-Install from `main` branch using `go insall`, and login to Docker Hub using a secret:
+Install from `main` branch using `go install`, and login to Docker Hub using a secret:
 
 ```yaml
 jobs:
@@ -74,10 +74,8 @@ jobs:
     runs-on: ubuntu-latest
     name: example
     steps:
-      - name: Set up Go 1.17
+      - name: Set up Go
         uses: actions/setup-go@v3
-        with:
-          go-version: 1.17.x
       - name: Install cosign
         uses: sigstore/cosign-installer@main
       - name: Install regctl
