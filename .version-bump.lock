@@ -1,5 +1,5 @@
 {"name":"gha-uses-semver","key":"sigstore/cosign-installer","version":"v3.1.2"}
-{"name":"gha-uses-vx","key":"actions/checkout","version":"v3"}
+{"name":"gha-uses-vx","key":"actions/checkout","version":"v4"}
 {"name":"gha-uses-vx","key":"actions/setup-go","version":"v4"}
 {"name":"git-tag-semver","key":"github.com/sigstore/cosign","version":"v2.2.0"}
 {"name":"registry-golang-latest","key":"golang-latest","version":"1.21"}
