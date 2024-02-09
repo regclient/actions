@@ -19,12 +19,12 @@ jobs:
         if: ${{ matrix.version == 'main' }}
         uses: actions/setup-go@v5
         with:
-          go-version: 1.21.x
+          go-version: 1.22.x
 
       - name: Install cosign
-        uses: sigstore/cosign-installer@v3.3.0
+        uses: sigstore/cosign-installer@v3.4.0
         with:
-          cosign-release: "v2.2.2"
+          cosign-release: "v2.2.3"
 
       - name: Install regctl
         uses: ./regctl-installer/
