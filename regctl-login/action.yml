@@ -22,4 +22,4 @@ runs:
   steps:
     - shell: bash
       run: |
-        echo "${{ inputs.password }}" | regctl registry login "${{ inputs.registry }}" -u "${{ inputs.user }}" --pass-stdin
+        echo "${{ inputs.password }}" | regctl registry login "${{ inputs.registry }}" -u "${{ inputs.username }}" --pass-stdin
