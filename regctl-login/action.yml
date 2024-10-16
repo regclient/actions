@@ -17,9 +17,17 @@ inputs:
     description: password to login with
     required: false
     default: ${{ github.token }}
+  options:
+    description: options for regctl registry login, e.g. --skip-check
+    required: false
 runs:
   using: 'composite'
   steps:
     - shell: bash
+      env:
+        REGISTRY: ${{ inputs.registry }}
+        USERNAME: ${{ inputs.username }}
+        PASSWORD: ${{ inputs.password }}
       run: |
-        echo "${{ inputs.password }}" | regctl registry login "${{ inputs.registry }}" -u "${{ inputs.username }}" --pass-stdin
+        echo "::add-mask::${PASSWORD}"
+        echo "${PASSWORD}" | regctl registry login "${REGISTRY}" -u "${USERNAME}" --pass-stdin ${{ inputs.options }}
