@@ -8,8 +8,11 @@ jobs:
     name: Test regctl install
     strategy:
       matrix:
-        version: ["latest", "main", "v0.4.7"]
+        version: ["latest", "main", "v0.5.7"]
         os: [macos-latest, ubuntu-latest, windows-latest]
+    env:
+      example_user: "demo$user"
+      example_pass: "example$pass\\word'\"with#special&chars"
     runs-on: ${{ matrix.os }}
     steps:
       - name: Check out code
@@ -37,7 +40,15 @@ jobs:
       - name: Login
         uses: ./regctl-login/
 
-      - name: Check root directory
+      - name: Login
+        uses: ./regctl-login/
+        with:
+          registry: "localhost:5000"
+          username: "${{ env.example_user }}"
+          password: "${{ env.example_pass }}"
+          options: "--skip-check"
+
+      - name: Check the git working directory
         shell: bash
         run: |
           if [[ $(git diff --stat) != '' ]]; then
@@ -45,4 +56,24 @@ jobs:
             exit 1
           else
             exit 0
+          fi
+
+      - name: Verify credentials were set
+        shell: bash
+        env:
+          expect_gh_user: ${{ github.actor }}
+          expect_gh_token: ${{ github.token }}
+        run: |
+          gh_user="$(jq -r '.hosts."ghcr.io".user' <~/.regctl/config.json)"
+          gh_token="$(jq -r '.hosts."ghcr.io".pass' <~/.regctl/config.json)"
+          echo "::add-mask::$gh_token"
+          if [ "$gh_user" != "$expect_gh_user" ] || [ "$gh_token" != "$expect_gh_token" ]; then
+            echo "default login did not save expected values" >&2
+            exit 1
+          fi
+          local_user="$(jq -r '.hosts."localhost:5000".user' <~/.regctl/config.json)"
+          local_pass="$(jq -r '.hosts."localhost:5000".pass' <~/.regctl/config.json)"
+          if [ "$local_user" != "$example_user" ] || [ "$local_pass" != "${example_pass}" ]; then
+            echo "localhost:5000 login did not save expected values" >&2
+            exit 1
           fi
