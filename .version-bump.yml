@@ -5,6 +5,9 @@ files:
       - gha-uses-semver
       - gha-uses-vx
       - gha-cosign-version
+  "README.md":
+    scans:
+      - gha-uses-vx
 
 scans:
   gha-uses-semver:
