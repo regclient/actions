@@ -1,5 +1,5 @@
-{"name":"gha-cosign-version","key":"github.com/sigstore/cosign","version":"v2.5.0"}
+{"name":"gha-cosign-version","key":"github.com/sigstore/cosign","version":"v2.5.2"}
 {"name":"gha-golang-release","key":"golang-latest","version":"1.24"}
-{"name":"gha-uses-semver","key":"sigstore/cosign-installer","version":"v3.8.2"}
+{"name":"gha-uses-semver","key":"sigstore/cosign-installer","version":"v3.9.1"}
 {"name":"gha-uses-vx","key":"actions/checkout","version":"v4"}
 {"name":"gha-uses-vx","key":"actions/setup-go","version":"v5"}
