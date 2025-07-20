@@ -25,9 +25,9 @@ jobs:
           go-version: 1.24.x
 
       - name: Install cosign
-        uses: sigstore/cosign-installer@v3.9.1
+        uses: sigstore/cosign-installer@v3.9.2
         with:
-          cosign-release: "v2.5.2"
+          cosign-release: "v2.5.3"
 
       - name: Install regctl
         uses: ./regctl-installer/
