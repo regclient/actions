@@ -12,7 +12,7 @@ jobs:
 
     steps:
       - name: Check out code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       - name: Version Check
         uses: docker://ghcr.io/sudo-bmitch/version-bump:edge
         with:
