@@ -75,7 +75,7 @@ jobs:
     name: example
     steps:
       - name: Set up Go
-        uses: actions/setup-go@v5
+        uses: actions/setup-go@v6
       - name: Install cosign
         uses: sigstore/cosign-installer@main
       - name: Install regctl
