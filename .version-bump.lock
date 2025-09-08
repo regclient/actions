@@ -2,4 +2,4 @@
 {"name":"gha-golang-release","key":"golang-latest","version":"1.25"}
 {"name":"gha-uses-semver","key":"sigstore/cosign-installer","version":"v3.9.2"}
 {"name":"gha-uses-vx","key":"actions/checkout","version":"v5"}
-{"name":"gha-uses-vx","key":"actions/setup-go","version":"v5"}
+{"name":"gha-uses-vx","key":"actions/setup-go","version":"v6"}
