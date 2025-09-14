@@ -1,75 +1,97 @@
 files:
   ".github/workflows/*.yml":
-    scans:
+    processors:
       - gha-golang-release
-      - gha-uses-semver
       - gha-uses-vx
+      - gha-uses-semver
+      - gha-uses-commit
       - gha-cosign-version
   "README.md":
-    scans:
+    processors:
       - gha-uses-vx
 
-scans:
-  gha-uses-semver:
-    type: "regexp"
-    source: "gha-uses-semver"
-    args:
-      regexp: '^\s+-?\s+uses: (?P<Repo>[^@/]+/[^@/]+)[^@]*@(?P<Version>v\d+\.\d+\.\d+)\s*$'
-  gha-uses-vx:
-    type: "regexp"
-    source: "gha-uses-vx"
-    args:
-      regexp: '^\s+-?\s+uses: (?P<Repo>[^@]+)@(?P<Version>v\d+)\s*$'
-  gha-golang-release:
-    type: "regexp"
-    source: "registry-golang-latest"
-    args:
-      regexp: '^\s*go-version: (?P<Version>[0-9\.]+)\.x\s*$'
+x-processor-tmpl:
+  git-commit: &git-commit
+    key: "{{ .SourceArgs.url }}:{{ .SourceArgs.ref }}"
+    scan: "regexp"
+    source: "git-commit"
+    filter:
+      expr: "^{{ .SourceArgs.ref }}$"
+  git-tag-semver: &git-tag-semver
+    key: "{{ .SourceArgs.url }}"
+    scan: "regexp"
+    source: "git-tag"
+    filter:
+      expr: '^v?\d+\.\d+\.\d+$'
+    sort:
+      method: "semver"
+  registry-digest: &registry-digest
+    key: "{{ .SourceArgs.image }}"
+    scan: "regexp"
+    source: "registry-digest"
+  registry-tag-semver: &registry-tag-semver
+    key: "{{ .SourceArgs.repo }}"
+    scan: "regexp"
+    source: "registry-tag"
+    filter:
+      expr: '^v?\d+\.\d+\.\d+$'
+    sort:
+      method: "semver"
+
+processors:
   gha-cosign-version:
+    <<: *git-tag-semver
+    scanArgs:
+      regexp: '^\s*cosign-release: "(?P<Version>v?[0-9\.]+)"\s*$'
+    sourceArgs:
+      url: "https://github.com/sigstore/cosign.git"
+  gha-golang-release:
+    <<: *registry-tag-semver
+    key: "golang-latest"
+    scanArgs:
+      regexp: '^\s*go-version: "(?P<Version>v?[0-9\.]+)"\s*$'
+    sourceArgs:
+      repo: "docker.io/library/golang"
+    filter:
+      expr: '^v?\d+\.\d+$'
+  gha-uses-vx:
+    <<: *git-tag-semver
+    scanArgs:
+      regexp: '^\s+-?\s+uses: (?P<Repo>[^@/]+/[^@/]+)[^@]*@(?P<Commit>[0-9a-f]+)\s+#\s+(?P<Version>v?\d+)\s*$'
+    sourceArgs:
+      url: "https://github.com/{{ .ScanMatch.Repo }}.git"
+    filter:
+      expr: '^v?\d+$'
+  gha-uses-semver:
+    <<: *git-tag-semver
+    scanArgs:
+      regexp: '^\s+-?\s+uses: (?P<Repo>[^@/]+/[^@/]+)[^@]*@(?P<Commit>[0-9a-f]+)\s+#\s+(?P<Version>v?\d+\.\d+\.\d+)\s*$'
+    sourceArgs:
+      url: "https://github.com/{{ .ScanMatch.Repo }}.git"
+  gha-uses-commit:
+    <<: *git-commit
+    scanArgs:
+      regexp: '^\s+-?\s+uses: (?P<Repo>[^@/]+/[^@/]+)[^@]*@(?P<Version>[0-9a-f]+)\s+#\s+(?P<Ref>[\w\d\.]+)\s*$'
+    sourceArgs:
+      url: "https://github.com/{{ .ScanMatch.Repo }}.git"
+      ref: "{{ .ScanMatch.Ref }}"
+
+scans:
+  regexp:
     type: "regexp"
-    source: "git-tag-semver"
-    args:
-      regexp: '^\s*cosign-release: "(?P<Version>v[0-9\.]+)"\s*$'
-      repo: "github.com/sigstore/cosign"
 
 sources:
-  gha-uses-semver:
+  git-commit:
     type: "git"
-    key: "{{ .ScanMatch.Repo }}"
+    args:
+      type: "commit"
+  git-tag:
+    type: "git"
     args:
       type: "tag"
-      url: "https://github.com/{{ .ScanMatch.Repo }}.git"
-    filter:
-      expr: '^v\d+\.\d+\.\d+$'
-    sort:
-      method: "semver"
-  gha-uses-vx:
-    type: "git"
-    key: "{{ .ScanMatch.Repo }}"
-    args:
-      type: "tag"
-      url: "https://github.com/{{ .ScanMatch.Repo }}.git"
-    filter:
-      expr: '^v\d+$'
-    sort:
-      method: "semver"
-  git-tag-semver:
-    type: "git"
-    key: "{{ .ScanArgs.repo }}"
-    args:
-      type: "tag"
-      url: "https://{{ .ScanArgs.repo }}.git"
-    filter:
-      expr: '^v[0-9]+\.[0-9]+\.[0-9]+$'
-    sort:
-      method: "semver"
-  registry-golang-latest:
+  registry-digest:
     type: "registry"
-    key: "golang-latest"
+  registry-tag:
+    type: "registry"
     args:
-      repo: "golang"
       type: "tag"
-    filter:
-      expr: '^\d+\.\d+$'
-    sort:
-      method: "semver"
