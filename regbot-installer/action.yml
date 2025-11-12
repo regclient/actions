@@ -16,7 +16,7 @@ inputs:
 runs:
   using: 'composite'
   steps:
-    - uses: ./cmd-installer
+    - uses: regclient/actions/cmd-installer@${{ github.ref_name }}
       with:
         install-cmd: regbot
         release: ${{ inputs.release }}
