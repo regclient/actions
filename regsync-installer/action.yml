@@ -16,7 +16,7 @@ inputs:
 runs:
   using: 'composite'
   steps:
-    - uses: ./cmd-installer
+    - uses: regclient/actions/regctl-installer@main
       with:
         install-cmd: regsync
         release: ${{ inputs.release }}
