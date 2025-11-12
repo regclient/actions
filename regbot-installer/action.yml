@@ -1,4 +1,4 @@
-name: regctl-installer
+name: regbot-installer
 author: regclient
 description: 'Docker registry client'
 branding:
@@ -12,12 +12,12 @@ inputs:
   install-dir:
     description: 'where to install the binary'
     required: false
-    default: '$HOME/.regctl/bin'
+    default: '$HOME/.regbot/bin'
 runs:
   using: 'composite'
   steps:
     - uses: ./cmd-installer
       with:
-        install-cmd: regctl
+        install-cmd: regbot
         release: ${{ inputs.release }}
         install-dir: ${{ inputs.install-dir }}

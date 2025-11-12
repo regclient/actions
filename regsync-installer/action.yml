@@ -1,4 +1,4 @@
-name: regctl-installer
+name: regsync-installer
 author: regclient
 description: 'Docker registry client'
 branding:
@@ -12,12 +12,12 @@ inputs:
   install-dir:
     description: 'where to install the binary'
     required: false
-    default: '$HOME/.regctl/bin'
+    default: '$HOME/.regsync/bin'
 runs:
   using: 'composite'
   steps:
     - uses: ./cmd-installer
       with:
-        install-cmd: regctl
+        install-cmd: regsync
         release: ${{ inputs.release }}
         install-dir: ${{ inputs.install-dir }}

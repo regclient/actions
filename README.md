@@ -2,11 +2,38 @@
 
 This repo contains various GitHub actions for regclient.
 
-## regctl-install
+## cmd-installer
+
+This action installs the requested binary.
+Most users will run one of the command specific installers below.
+
+### cmd-installer Usage
+
+```yaml
+- name: Install regctl
+  uses: regclient/actions/cmd-installer@main
+  with:
+    install-cmd: 'regctl' # regclient command to install
+    release: 'v0.4.7' # optional version
+```
+
+### cmd-installer Inputs
+
+The following inputs are available for cmd-installer:
+
+| Input | Description |
+| --- | --- |
+| `install-cmd` | regclient command to install. This is required. |
+| `release` | version to use. Defaults to `latest` (most recent release). Set to `main` to build the latest commit using `go install`. |
+| `install-dir` | directory to place the binary into instead of the default (`$HOME/.regclient/bin`). |
+
+If cosign is installed, signatures on downloaded binaries will be verified.
+
+## regctl-installer
 
 This action installs the `regctl` binary.
 
-### regctl-install Usage
+### regctl-installer Usage
 
 ```yaml
 - name: Install regctl
@@ -23,6 +50,54 @@ The following inputs are available for regctl-installer:
 | --- | --- |
 | `release` | `regctl` version to use. Defaults to `latest` (most recent release). Set to `main` to build the latest commit using `go install`. |
 | `install-dir` | directory to place the `regctl` binary into instead of the default (`$HOME/.regctl/bin`). |
+
+If cosign is installed, signatures on downloaded binaries will be verified.
+
+## regsync-installer
+
+This action installs the `regsync` binary.
+
+### regsync-installer Usage
+
+```yaml
+- name: Install regsync
+  uses: regclient/actions/regsync-installer@main
+  with:
+    release: 'v0.4.7' # optional version
+```
+
+### regsync-installer Inputs
+
+The following inputs are available for regsync-installer:
+
+| Input | Description |
+| --- | --- |
+| `release` | `regsync` version to use. Defaults to `latest` (most recent release). Set to `main` to build the latest commit using `go install`. |
+| `install-dir` | directory to place the `regsync` binary into instead of the default (`$HOME/.regsync/bin`). |
+
+If cosign is installed, signatures on downloaded binaries will be verified.
+
+## regbot-installer
+
+This action installs the `regbot` binary.
+
+### regbot-installer Usage
+
+```yaml
+- name: Install regbot
+  uses: regclient/actions/regbot-installer@main
+  with:
+    release: 'v0.4.7' # optional version
+```
+
+### regbot-installer Inputs
+
+The following inputs are available for regbot-installer:
+
+| Input | Description |
+| --- | --- |
+| `release` | `regbot` version to use. Defaults to `latest` (most recent release). Set to `main` to build the latest commit using `go install`. |
+| `install-dir` | directory to place the `regbot` binary into instead of the default (`$HOME/.regbot/bin`). |
 
 If cosign is installed, signatures on downloaded binaries will be verified.
 
@@ -49,7 +124,7 @@ The following inputs are available for regctl-login:
 
 ## Examples
 
-Install latest release:
+Install latest release of regctl:
 
 ```yaml
 jobs:
@@ -76,8 +151,6 @@ jobs:
     steps:
       - name: Set up Go
         uses: actions/setup-go@v6
-      - name: Install cosign
-        uses: sigstore/cosign-installer@main
       - name: Install regctl
         uses: regclient/actions/regctl-installer@main
         with:
