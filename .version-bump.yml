@@ -46,7 +46,7 @@ processors:
     sourceArgs:
       url: "https://github.com/sigstore/cosign.git"
     filter:
-      expr: '^v?2\.\d+\.\d+$' # pin to v2 pending cosign-installer upgrade
+      expr: '^v?3\.\d+\.\d+$' # pin to v3, v4 will force the use of bundles
   gha-golang-release:
     <<: *registry-tag-semver
     key: "golang-latest"

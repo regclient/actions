@@ -64,7 +64,16 @@ runs:
         chmod +x "${INSTALL_DIR}/${INSTALL_CMD}${url_ext}"
         if [ -x "$(command -v cosign)" ]; then
           curl -L "${url_base}/${url_release}/metadata.tgz" >metadata.tgz
-          if tar -xzf metadata.tgz "${INSTALL_CMD}-${url_platform}.pem" "${INSTALL_CMD}-${url_platform}.sig"; then
+          # first try to verify the bundle
+          if tar -xzf metadata.tgz "${INSTALL_CMD}-${url_platform}.sigstore.json"; then
+            cosign verify-blob \
+              --certificate-oidc-issuer https://token.actions.githubusercontent.com \
+              --certificate-identity-regexp https://github.com/regclient/regclient/.github/workflows/ \
+              --bundle "${INSTALL_CMD}-${url_platform}.sigstore.json" \
+              "${INSTALL_DIR}/${INSTALL_CMD}${url_ext}"
+            rm metadata.tgz "${INSTALL_CMD}-${url_platform}.sigstore.json"
+          # else try to verify the individual pem/sig
+          elif tar -xzf metadata.tgz "${INSTALL_CMD}-${url_platform}.pem" "${INSTALL_CMD}-${url_platform}.sig"; then
             cosign verify-blob \
               --certificate-oidc-issuer https://token.actions.githubusercontent.com \
               --certificate-identity-regexp https://github.com/regclient/regclient/.github/workflows/ \
