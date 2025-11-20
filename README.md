@@ -2,33 +2,6 @@
 
 This repo contains various GitHub actions for regclient.
 
-## cmd-installer
-
-This action installs the requested binary.
-Most users will run one of the command specific installers below.
-
-### cmd-installer Usage
-
-```yaml
-- name: Install regctl
-  uses: regclient/actions/cmd-installer@main
-  with:
-    install-cmd: 'regctl' # regclient command to install
-    release: 'v0.4.7' # optional version
-```
-
-### cmd-installer Inputs
-
-The following inputs are available for cmd-installer:
-
-| Input | Description |
-| --- | --- |
-| `install-cmd` | regclient command to install. This is required. |
-| `release` | version to use. Defaults to `latest` (most recent release). Set to `main` to build the latest commit using `go install`. |
-| `install-dir` | directory to place the binary into instead of the default (`$HOME/.regclient/bin`). |
-
-If cosign is installed, signatures on downloaded binaries will be verified.
-
 ## regctl-installer
 
 This action installs the `regctl` binary.
