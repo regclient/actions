@@ -12,7 +12,6 @@ inputs:
   install-dir:
     description: 'where to install the binary'
     required: false
-    default: '$HOME/.regbot/bin'
 runs:
   using: 'composite'
   steps:
@@ -32,6 +31,10 @@ runs:
           alias log_info="echo \"INFO:\""
           alias log_error="echo \"ERROR:\""
         fi
+        if [ -z "${INSTALL_DIR}" ]; then
+          INSTALL_DIR="${HOME}/.regbot/bin"
+        fi
+        log_info "installing to ${INSTALL_DIR}"
         mkdir -p "${INSTALL_DIR}"
         url_base="https://github.com/regclient/regclient"
         url_ext=""
@@ -63,6 +66,7 @@ runs:
         curl -sL "${url_base}/${url_release}/${INSTALL_CMD}-${url_platform}${url_ext}" -o "${INSTALL_DIR}/${INSTALL_CMD}${url_ext}"
         chmod +x "${INSTALL_DIR}/${INSTALL_CMD}${url_ext}"
         if [ -x "$(command -v cosign)" ]; then
+          log_info "verifying cosign signature"
           curl -L "${url_base}/${url_release}/metadata.tgz" >metadata.tgz
           # first try to verify the bundle
           if tar -xzf metadata.tgz "${INSTALL_CMD}-${url_platform}.sigstore.json"; then
@@ -86,14 +90,16 @@ runs:
             rm metadata.tgz
           fi
         fi
+        echo "${INSTALL_DIR}" >> $GITHUB_PATH
         log_info "install complete"
-    - if: ${{ runner.os == 'Linux' || runner.os == 'macOS' }}
-      shell: bash
-      env:
-        INSTALL_DIR: ${{ inputs.install-dir }}
-      run:  echo "${INSTALL_DIR}" >> $GITHUB_PATH
     - if: ${{ runner.os == 'Windows' }}
       shell: pwsh
       env:
         INSTALL_DIR: ${{ inputs.install-dir }}
-      run:  echo "$env:INSTALL_DIR" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+      run: |
+        $installdir = "$env:INSTALL_DIR"
+        if (!$installdir) {
+          $installdir = Join-Path $HOME '.regbot\bin'
+        }
+        echo "Adding to path $installdir"
+        echo "$installdir" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
