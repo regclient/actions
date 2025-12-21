@@ -46,6 +46,8 @@ runs:
           go install github.com/regclient/regclient/cmd/${INSTALL_CMD}@main
           GOPATH=$(go env GOPATH)
           ln -s "$GOPATH/bin/${INSTALL_CMD}${url_ext}" "${INSTALL_DIR}/${INSTALL_CMD}${url_ext}"
+          echo "${INSTALL_DIR}" >> $GITHUB_PATH
+          log_info "install complete"
           exit 0
         elif [ "${RELEASE}" = "latest" ]; then
           url_release="releases/latest/download"
