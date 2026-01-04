@@ -2,6 +2,8 @@
 {"name":"gha-uses-commit","key":"https://github.com/actions/checkout.git:v6.0.1","version":"8e8c483db84b4bee98b60c0593521ed34d9990e8"}
 {"name":"gha-uses-commit","key":"https://github.com/actions/setup-go.git:v6.1.0","version":"4dc6199c7b1a012772edbd06daecab0f50c9053c"}
 {"name":"gha-uses-commit","key":"https://github.com/sigstore/cosign-installer.git:v4.0.0","version":"faadad0cce49287aee09b3a48701e75088a2c6ad"}
+{"name":"gha-uses-commit","key":"https://github.com/softprops/action-gh-release.git:v2.5.0","version":"a06a81a03ee405af7f2048a818ed3f03bbf83c7b"}
 {"name":"gha-uses-semver","key":"https://github.com/actions/checkout.git","version":"v6.0.1"}
 {"name":"gha-uses-semver","key":"https://github.com/actions/setup-go.git","version":"v6.1.0"}
 {"name":"gha-uses-semver","key":"https://github.com/sigstore/cosign-installer.git","version":"v4.0.0"}
+{"name":"gha-uses-semver","key":"https://github.com/softprops/action-gh-release.git","version":"v2.5.0"}
