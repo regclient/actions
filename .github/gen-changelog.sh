@@ -35,7 +35,7 @@ cd "$(dirname $0)"
 cd "$(git rev-parse --show-toplevel)"
 
 generate_changelog() {
-  hashes="$(git log --reverse --merges --format="%h" ${prev_tag:+${prev_tag}..HEAD})"
+  hashes="$(git log --reverse --merges --format="%h" ${prev_tag:+${prev_tag}^..HEAD})"
   prs=""
   users=""
   for hash in ${hashes}; do

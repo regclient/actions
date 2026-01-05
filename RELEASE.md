@@ -1,6 +1,6 @@
 # Release Notes
 
-## Release v0.1.0-rc1
+## Release v0.1.0
 
 - Fix: Handle special characters in the inputs. ([PR 20][pr-20])
 - Feat: Support passing additional options to `regctl registry login` like `--skip-check`. ([PR 20][pr-20])
@@ -11,6 +11,7 @@
 - Chore: Allow action to be manually tested. ([PR 37][pr-37])
 - Fix: Expand $HOME variable in default install directory. ([PR 41][pr-41])
 - Fix: Add the path to main releases. ([PR 42][pr-42])
+- Feat: Add a release workflow. ([PR 44][pr-44])
 
 Contributors:
 
@@ -25,3 +26,4 @@ Contributors:
 [pr-37]: https://github.com/regclient/actions/pull/37
 [pr-41]: https://github.com/regclient/actions/pull/41
 [pr-42]: https://github.com/regclient/actions/pull/42
+[pr-44]: https://github.com/regclient/actions/pull/44
