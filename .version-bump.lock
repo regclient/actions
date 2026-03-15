@@ -2,9 +2,9 @@
 {"name":"gha-golang-release","key":"golang-latest","version":"1.26"}
 {"name":"gha-uses-commit","key":"https://github.com/actions/checkout.git:v6.0.2","version":"de0fac2e4500dabe0009e67214ff5f5447ce83dd"}
 {"name":"gha-uses-commit","key":"https://github.com/actions/setup-go.git:v6.3.0","version":"4b73464bb391d4059bd26b0524d20df3927bd417"}
-{"name":"gha-uses-commit","key":"https://github.com/sigstore/cosign-installer.git:v4.0.0","version":"faadad0cce49287aee09b3a48701e75088a2c6ad"}
-{"name":"gha-uses-commit","key":"https://github.com/softprops/action-gh-release.git:v2.5.0","version":"a06a81a03ee405af7f2048a818ed3f03bbf83c7b"}
+{"name":"gha-uses-commit","key":"https://github.com/sigstore/cosign-installer.git:v4.1.0","version":"ba7bc0a3fef59531c69a25acd34668d6d3fe6f22"}
+{"name":"gha-uses-commit","key":"https://github.com/softprops/action-gh-release.git:v2.5.3","version":"1853d73993c8ca1b2c9c1a7fede39682d0ab5c2a"}
 {"name":"gha-uses-semver","key":"https://github.com/actions/checkout.git","version":"v6.0.2"}
 {"name":"gha-uses-semver","key":"https://github.com/actions/setup-go.git","version":"v6.3.0"}
-{"name":"gha-uses-semver","key":"https://github.com/sigstore/cosign-installer.git","version":"v4.0.0"}
-{"name":"gha-uses-semver","key":"https://github.com/softprops/action-gh-release.git","version":"v2.5.0"}
+{"name":"gha-uses-semver","key":"https://github.com/sigstore/cosign-installer.git","version":"v4.1.0"}
+{"name":"gha-uses-semver","key":"https://github.com/softprops/action-gh-release.git","version":"v2.5.3"}
