@@ -28,7 +28,7 @@ jobs:
       - name: Install cosign
         uses: sigstore/cosign-installer@cad07c2e89fa2edd6e2d7bab4c1aa38e53f76003 # v4.1.1
         with:
-          cosign-release: "v3.0.5"
+          cosign-release: "v3.0.6"
 
       - name: Install regctl
         uses: ./regctl-installer/
