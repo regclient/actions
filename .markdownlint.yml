@@ -12,25 +12,22 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-name: Version Check
+# all lists use a `-`
+MD004:
+  style: dash
 
-on:
-  schedule:
-    - cron: '0 05 * * 0'
-  workflow_dispatch:
+# allow tabs in code blocks (for Go)
+MD010:
+  code_blocks: false
 
-permissions:
-  contents: read
+# disable line length, prefer one sentence per line for PRs
+MD013: false
 
-jobs:
-  test:
-    name: Version Check
-    runs-on: ubuntu-latest
+# emphasis with underscore (`_emphasis_`)
+MD049:
+  style: "underscore"
 
-    steps:
-      - name: Check out code
-        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
-      - name: Version Check
-        uses: docker://ghcr.io/sudo-bmitch/version-bump:edge
-        with:
-          args: check
+# bold with asterisk (`**bold**`)
+MD050:
+  style: "asterisk"
+    
