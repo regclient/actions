@@ -1,3 +1,5 @@
+#!/bin/sh
+
 # Copyright the regclient contributors.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,25 +14,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-name: Version Check
+rc=0
+for file in $(git ls-files -- '*.go' '*.sh' '*.yml'); do
+  if ! grep -iq "copyright the regclient contributors" "${file}"; then
+    echo "Missing copyright comment: ${file}" >&2
+	 rc=1
+  fi
+done
 
-on:
-  schedule:
-    - cron: '0 05 * * 0'
-  workflow_dispatch:
-
-permissions:
-  contents: read
-
-jobs:
-  test:
-    name: Version Check
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Check out code
-        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
-      - name: Version Check
-        uses: docker://ghcr.io/sudo-bmitch/version-bump:edge
-        with:
-          args: check
+exit ${rc}
