@@ -21,7 +21,7 @@ ifeq "$(strip $(VER_BUMP))" ''
 		-u "$(shell id -u):$(shell id -g)" \
 		$(VER_BUMP_CONTAINER)
 endif
-MARKDOWN_LINT_VER?=v0.22.1
+MARKDOWN_LINT_VER?=v0.23.0
 
 .PHONY: .FORCE
 .FORCE:
