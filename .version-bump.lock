@@ -1,4 +1,4 @@
-{"name":"gha-cosign-version","key":"https://github.com/sigstore/cosign.git","version":"v3.1.2"}
+{"name":"gha-cosign-version","key":"https://github.com/sigstore/cosign.git","version":"v3.1.3"}
 {"name":"gha-golang-release","key":"golang-latest","version":"1.26"}
 {"name":"gha-uses-commit","key":"https://github.com/actions/checkout.git:v7.0.1","version":"3d3c42e5aac5ba805825da76410c181273ba90b1"}
 {"name":"gha-uses-commit","key":"https://github.com/actions/setup-go.git:v7.0.0","version":"b7ad1dad31e06c5925ef5d2fc7ad053ef454303e"}
