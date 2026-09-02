@@ -61,6 +61,7 @@ runs:
           GOPATH=$(go env GOPATH)
           ln -s "$GOPATH/bin/${INSTALL_CMD}${url_ext}" "${INSTALL_DIR}/${INSTALL_CMD}${url_ext}"
           echo "${INSTALL_DIR}" >> $GITHUB_PATH
+          "${INSTALL_DIR}/${INSTALL_CMD}${url_ext}" version
           log_info "install complete"
           exit 0
         elif [ "${RELEASE}" = "latest" ]; then
@@ -107,6 +108,7 @@ runs:
           fi
         fi
         echo "${INSTALL_DIR}" >> $GITHUB_PATH
+        "${INSTALL_DIR}/${INSTALL_CMD}${url_ext}" version
         log_info "install complete"
     - if: ${{ runner.os == 'Windows' }}
       shell: pwsh
