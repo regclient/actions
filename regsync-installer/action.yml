@@ -80,11 +80,11 @@ runs:
             exit 1
             ;;
         esac
-        curl -sL "${url_base}/${url_release}/${INSTALL_CMD}-${url_platform}${url_ext}" -o "${INSTALL_DIR}/${INSTALL_CMD}${url_ext}"
+        curl -fLsS --retry 3 "${url_base}/${url_release}/${INSTALL_CMD}-${url_platform}${url_ext}" -o "${INSTALL_DIR}/${INSTALL_CMD}${url_ext}"
         chmod +x "${INSTALL_DIR}/${INSTALL_CMD}${url_ext}"
         if [ -x "$(command -v cosign)" ]; then
           log_info "verifying cosign signature"
-          curl -L "${url_base}/${url_release}/metadata.tgz" >metadata.tgz
+          curl -fLsS --retry 3 "${url_base}/${url_release}/metadata.tgz" >metadata.tgz
           # first try to verify the bundle
           if tar -xzf metadata.tgz "${INSTALL_CMD}-${url_platform}.sigstore.json"; then
             cosign verify-blob \
