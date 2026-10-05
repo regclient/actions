@@ -1,5 +1,27 @@
 # Release Notes
 
+## Release v0.2.0-rc1
+
+This release is primarily to pull in various dependency updates.
+Very little has changed in the actions code itself.
+
+Changes:
+
+- Fix: Manage Go version in GHA with version-bump. ([PR 47][pr-47])
+- Chore: Add copyright headers and markdown linting. ([PR 59][pr-59])
+- Feat: Run the version command after installing. ([PR 67][pr-67])
+- Chore: Refactor release process. ([PR 71][pr-71])
+
+Contributors:
+
+- @HastD
+- @sudo-bmitch
+
+[pr-47]: https://github.com/regclient/actions/pull/47
+[pr-59]: https://github.com/regclient/actions/pull/59
+[pr-67]: https://github.com/regclient/actions/pull/67
+[pr-71]: https://github.com/regclient/actions/pull/71
+
 ## Release v0.1.0
 
 - Fix: Handle special characters in the inputs. ([PR 20][pr-20])
