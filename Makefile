@@ -41,6 +41,14 @@ lint-md: .FORCE ## Run linting for markdown
 	docker run --rm -v "$(PWD):/workdir:ro" davidanson/markdownlint-cli2:$(MARKDOWN_LINT_VER) \
 	  "**/*.md" "#vendor"
 
+.PHONY: util-release-preview
+util-release-preview: ## preview changes for next release
+	./.github/release.sh -d
+
+.PHONY: util-release-run
+util-release-run: ## generate a new release
+	./.github/release.sh
+
 .PHONY: util-version-check
 util-version-check: ## check all dependencies for updates
 	$(VER_BUMP) check
