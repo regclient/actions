@@ -8,4 +8,4 @@
 {"name":"gha-uses-semver","key":"https://github.com/actions/setup-go.git","version":"v7.0.0"}
 {"name":"gha-uses-semver","key":"https://github.com/sigstore/cosign-installer.git","version":"v4.1.2"}
 {"name":"gha-uses-semver","key":"https://github.com/softprops/action-gh-release.git","version":"v3.0.3"}
-{"name":"makefile-markdown-lint","key":"docker.io/davidanson/markdownlint-cli2","version":"v0.23.2"}
+{"name":"makefile-markdown-lint","key":"docker.io/davidanson/markdownlint-cli2","version":"v0.23.3"}
