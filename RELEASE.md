@@ -1,6 +1,6 @@
 # Release Notes
 
-## Release v0.2.0-rc1
+## Release v0.2.0
 
 This release is primarily to pull in various dependency updates.
 Very little has changed in the actions code itself.
